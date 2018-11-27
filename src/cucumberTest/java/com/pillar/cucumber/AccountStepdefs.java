@@ -1,8 +1,10 @@
 package com.pillar.cucumber;
 
+import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
+import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
-import org.springframework.http.HttpMethod;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.web.reactive.function.BodyInserters;
 import org.springframework.web.reactive.function.client.ClientResponse;
@@ -11,10 +13,15 @@ import org.springframework.web.reactive.function.client.WebClient;
 import java.util.HashMap;
 import java.util.Map;
 
+import static org.junit.Assert.*;
+
 public class AccountStepdefs {
     private String ssn;
     private String cardholderName;
     private String merchant;
+
+    private HttpStatus status;
+    private Map body;
 
     @Given("a cardholder Name: {string}, SSN: {string}, Merchant: {string}")
     public void aCardholderNameSsnMerchant(String cardholderName, String ssn, String merchant){
@@ -39,7 +46,20 @@ public class AccountStepdefs {
                                             .body(BodyInserters.fromObject(accountInfo))
                                             .exchange()
                                             .block();
-        final HttpStatus status = response.statusCode();
-        final Map<String, String> body = response.bodyToMono(Map.class).block();
+        this.status = response.statusCode();
+        this.body = response.bodyToMono(Map.class).block();
+    }
+
+    @Then("a new account is created and a new card number is issued to that account and returned")
+    public void aNewAccountIsCreatedAndANewCardNumberIsIssuedToThatAccountAndReturned(){
+        assertEquals(HttpStatus.CREATED, this.status);
+        assertTrue(body.containsKey("creditCardNumber"));
+        assertNotNull(body.get("creditCardNumber"));
+    }
+
+    @And("a credit limit of 10,000 is assigned")
+    public void aCreditLimitOf10000IsAssigned(){
+        assertTrue(body.containsKey("creditLilmit"));
+        assertNotNull(body.get("creditLimit"));
     }
 }
