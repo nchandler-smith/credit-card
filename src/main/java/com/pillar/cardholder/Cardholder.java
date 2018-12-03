@@ -12,9 +12,11 @@ public class Cardholder {
         this.id = id;
     }
 
+    public Integer getId(){ return this.id; }
+
     @Override
     public boolean equals(Object other){
-        return true;
+        return this.id.equals(((Cardholder)other).getId());
 
     }
 }
