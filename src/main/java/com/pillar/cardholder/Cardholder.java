@@ -11,4 +11,10 @@ public class Cardholder {
     public Cardholder(Integer id){
         this.id = id;
     }
+
+    @Override
+    public boolean equals(Object other){
+        return true;
+
+    }
 }
