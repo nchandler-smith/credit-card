@@ -6,8 +6,8 @@ import org.junit.Test;
 
 import java.util.HashMap;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
+import static org.junit.Assert.*;
+
 
 public class TestCardholder {
 
@@ -15,19 +15,19 @@ public class TestCardholder {
 
     @Before
     public void setup() {
-        cardholder1 = new Cardholder(1);
+        cardholder1 = new Cardholder(1, "Steve");
     }
 
     @Test
     public void twoCardholdersAreEqualIfTheirIdsAreIdentical() {
-        Cardholder cardholder2 = new Cardholder(1);
+        Cardholder cardholder2 = new Cardholder(1, "Steve");
 
         assertEquals(cardholder1, cardholder2);
     }
 
     @Test
     public void twoCardholderAreNotEqualIfTheirIdsAreNotIdentical() {
-        Cardholder cardholder2 = new Cardholder(2);
+        Cardholder cardholder2 = new Cardholder(2, "Steve");
 
         assertNotEquals(cardholder1, cardholder2);
     }
@@ -45,5 +45,10 @@ public class TestCardholder {
     @Test
     public void aCardholderIsNotEqualToObjectOfDifferentClass() {
         assertNotEquals(cardholder1, new HashMap<>());
+    }
+
+    @Test
+    public void aCardholderHasAFirstName() {
+        assertTrue(cardholder1.getFirstName() instanceof String);
     }
 }
