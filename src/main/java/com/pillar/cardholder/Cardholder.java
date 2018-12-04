@@ -19,6 +19,11 @@ public class Cardholder {
         if (other == null) {
             return false;
         }
+
+        if (this.getClass() != other.getClass()) {
+            return false;
+        }
+
         return this.id.equals(((Cardholder)other).getId());
 
     }
