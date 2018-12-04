@@ -15,19 +15,19 @@ public class TestCardholder {
 
     @Before
     public void setup() {
-        cardholder1 = new Cardholder(1, "Steve");
+        cardholder1 = new Cardholder(1, "Steve", "Goliath");
     }
 
     @Test
     public void twoCardholdersAreEqualIfTheirIdsAreIdentical() {
-        Cardholder cardholder2 = new Cardholder(1, "Steve");
+        Cardholder cardholder2 = new Cardholder(1, "Steve", "Goliath");
 
         assertEquals(cardholder1, cardholder2);
     }
 
     @Test
     public void twoCardholderAreNotEqualIfTheirIdsAreNotIdentical() {
-        Cardholder cardholder2 = new Cardholder(2, "Steve");
+        Cardholder cardholder2 = new Cardholder(2, "Steve", "Goliath");
 
         assertNotEquals(cardholder1, cardholder2);
     }
@@ -50,5 +50,10 @@ public class TestCardholder {
     @Test
     public void aCardholderHasAFirstName() {
         assertTrue(cardholder1.getFirstName() instanceof String);
+    }
+
+    @Test
+    public void aCardholderHasALastName() {
+        assertTrue(cardholder1.getLastName() instanceof String);
     }
 }
