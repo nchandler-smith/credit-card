@@ -34,4 +34,9 @@ public class TestCardholder {
     public void aCardholderIsNotEqualToNull() {
         assertNotEquals(cardholder1, null);
     }
+
+    @Test
+    public void aCardholderIsEqualToItself() {
+        assertEquals(cardholder1, cardholder1);
+    }
 }
