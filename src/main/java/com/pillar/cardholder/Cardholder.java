@@ -9,11 +9,13 @@ public class Cardholder {
     private Integer id;
     private String firstName;
     private String lastName;
+    private String ssn;
 
-    public Cardholder(Integer id, String firstName, String lastName) {
+    public Cardholder(Integer id, String firstName, String lastName, String ssn) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.ssn = ssn;
     }
 
     public Integer getId(){ return this.id; }
@@ -21,6 +23,8 @@ public class Cardholder {
     public String getFirstName() { return this.firstName; }
 
     public String getLastName() { return this.lastName; }
+
+    public String getSsn() { return this.ssn; }
 
     @Override
     public boolean equals(Object other){
