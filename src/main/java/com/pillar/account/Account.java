@@ -16,6 +16,10 @@ public class Account {
 
     @Override
     public boolean equals(Object other){
+        if(other == null) {
+            return false;
+        }
+
         return this.id.equals(((Account)other).getId());
     }
 }

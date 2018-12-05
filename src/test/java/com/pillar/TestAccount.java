@@ -28,4 +28,9 @@ public class TestAccount {
 
         assertNotEquals(account1, account2);
     }
+
+    @Test
+    public void anAccountIsNotEqualToNull() {
+        assertNotEquals(account1, null);
+    }
 }
