@@ -12,8 +12,10 @@ public class Account {
         this.id = id;
     }
 
+    public Integer getId() { return this.id; }
+
     @Override
     public boolean equals(Object other){
-        return true;
+        return this.id.equals(((Account)other).getId());
     }
 }
