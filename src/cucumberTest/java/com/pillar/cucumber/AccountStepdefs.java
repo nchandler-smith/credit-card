@@ -42,7 +42,7 @@ public class AccountStepdefs {
 
         final ClientResponse response = client
                                             .post()
-                                            .uri("api/account/create")
+                                            .uri("api/Account/create")
                                             .body(BodyInserters.fromObject(accountInfo))
                                             .exchange()
                                             .block();
