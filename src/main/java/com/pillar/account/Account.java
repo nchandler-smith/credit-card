@@ -20,6 +20,10 @@ public class Account {
             return false;
         }
 
+        if(this.getClass() != other.getClass()){
+            return false;
+        }
+
         return this.id.equals(((Account)other).getId());
     }
 }

@@ -33,4 +33,14 @@ public class TestAccount {
     public void anAccountIsNotEqualToNull() {
         assertNotEquals(account1, null);
     }
+
+    @Test
+    public void anAccountIsEqualToItself() {
+        assertEquals(account1, account1);
+    }
+
+    @Test
+    public void anAccountIsNotEqualToObjectOfDifferentClass() {
+        assertNotEquals(account1, new Integer(18));
+    }
 }
