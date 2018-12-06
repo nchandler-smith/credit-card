@@ -7,9 +7,11 @@ import static org.junit.Assert.assertNotNull;
 public class TestAccountApiController {
 
     @Test
-    public void accountApiCotrollerExists() {
+    public void accountApiControllerExists() {
         AccountApiController controller = new AccountApiController();
 
         assertNotNull(controller);
     }
+
+
 }
