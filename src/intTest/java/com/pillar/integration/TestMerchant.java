@@ -71,6 +71,9 @@ public class TestMerchant {
 
     @After
     public void tearDown() {
+        jdbcTemplate.update("SET FOREIGN_KEY_CHECKS = 0");
+        jdbcTemplate.update("TRUNCATE account");
+        jdbcTemplate.update("TRUNCATE cardholder");
         jdbcTemplate.update("TRUNCATE merchant");
     }
 
