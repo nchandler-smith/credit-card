@@ -21,7 +21,7 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Rollback
 @RunWith(SpringRunner.class)
-public class TestMerchant {
+public class IntegrationTestMerchant {
 
     private static final String TEST_MERCHANT_NAME = "Test Merchant";
     private static final int TEST_MERCHANT_ID = 1;

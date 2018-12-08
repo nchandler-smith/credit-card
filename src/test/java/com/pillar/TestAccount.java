@@ -35,9 +35,7 @@ public class TestAccount {
     }
 
     @Test
-    public void anAccountIsEqualToItself() {
-        assertEquals(account1, account1);
-    }
+    public void anAccountIsEqualToItself() { assertEquals(account1, account1); }
 
     @Test
     public void anAccountIsNotEqualToObjectOfDifferentClass() {
@@ -45,5 +43,8 @@ public class TestAccount {
     }
 
     @Test
-    public void anAccountHasACreditCardNumberUUID() {assertEquals(36, account1.getCardNumber().length() ); }
+    public void anAccountHasACreditCardNumberUUID() { assertEquals(36, account1.getCardNumber().length()); }
+
+    @Test
+    public void anAccountHasA10000CreditLimit() { assertEquals( (Integer) 10000, account1.getCreditLimit()); }
 }
