@@ -18,6 +18,12 @@ public class Cardholder {
         this.ssn = ssn;
     }
 
+    public Cardholder(String firstName, String lastName, String ssn) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.ssn = ssn;
+    }
+
     public Integer getId(){ return this.id; }
 
     public String getFirstName() { return this.firstName; }
