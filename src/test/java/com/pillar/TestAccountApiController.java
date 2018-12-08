@@ -18,5 +18,7 @@ public class TestAccountApiController {
     public void createAccountFromCardholder() {
         Cardholder cardholder = new Cardholder("Steve", "Goliath", "123-45-6788");
         AccountApiController controller = new AccountApiController();
+
+        assertNotNull(controller.createAccount(cardholder));
     }
 }

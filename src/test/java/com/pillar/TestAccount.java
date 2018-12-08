@@ -43,4 +43,7 @@ public class TestAccount {
     public void anAccountIsNotEqualToObjectOfDifferentClass() {
         assertNotEquals(account1, new Integer(18));
     }
+
+    @Test
+    public void anAccountHasACreditCardNumberUUID() {assertEquals(36, account1.getCardNumber().length() ); }
 }
