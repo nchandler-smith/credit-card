@@ -5,7 +5,8 @@ import com.pillar.cardholder.Cardholder;
 
 public class AccountApiController {
 
-    public Integer createAccount(Cardholder cardholder){
-        return 10000;
+    public String createAccount(Cardholder cardholder){
+        Account account = new Account(cardholder);
+        return account.getCardNumber();
     }
 }

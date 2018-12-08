@@ -1,18 +1,28 @@
 package com.pillar.account;
 
+import com.pillar.cardholder.Cardholder;
+
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.util.UUID;
 
 @Entity
 public class Account {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String cardNumber;
     private Integer creditLimit;
 
-    public Account (Integer id) {
+    public Account(Integer id) {
         this.id = id;
+        this.cardNumber = UUID.randomUUID().toString();
+        this.creditLimit = 10000;
+    }
+
+    public Account(Cardholder cardholder) {
         this.cardNumber = UUID.randomUUID().toString();
         this.creditLimit = 10000;
     }
