@@ -1,5 +1,6 @@
 package com.pillar;
 
+import com.pillar.account.Account;
 import com.pillar.cardholder.Cardholder;
 import org.junit.Test;
 
@@ -28,8 +29,18 @@ public class TestAccountApiController {
         Cardholder cardholder = new Cardholder("Steve", "Goliath", "123-45-6788");
         AccountApiController controller = new AccountApiController();
 
-        String cardNumber = controller.createAccount(cardholder);
+        Account account = controller.createAccount(cardholder);
 
-        assertEquals(36, cardNumber.length());
+        assertEquals(36, account.getCardNumber().length());
+    }
+
+    @Test
+    public void createdAccountHas10000DollarCrditLimit() {
+        Cardholder cardholder = new Cardholder("Steve", "Goliath", "123-45-6788");
+        AccountApiController controller = new AccountApiController();
+
+        Account account = controller.createAccount(cardholder);
+
+        assertEquals((Integer) 10000, account.getCreditLimit());
     }
 }
