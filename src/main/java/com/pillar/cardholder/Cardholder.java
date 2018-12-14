@@ -14,6 +14,8 @@ public class Cardholder {
     private String lastName;
     private String ssn;
 
+    public Cardholder() {}
+
     public Cardholder(Integer id, String firstName, String lastName, String ssn) {
         this.id = id;
         this.firstName = firstName;
