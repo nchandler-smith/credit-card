@@ -13,9 +13,7 @@ public class AccountApiController {
         this.cardholderRepository = cardholderRepository;
     }
 
-    public AccountApiController() {
-
-    }
+    public AccountApiController() {}
 
     public List<Cardholder> getAll() { return cardholderRepository.findAll(); }
 

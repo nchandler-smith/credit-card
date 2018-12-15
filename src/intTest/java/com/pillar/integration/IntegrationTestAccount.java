@@ -9,16 +9,23 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.web.server.LocalServerPort;
+import org.springframework.http.HttpStatus;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.web.reactive.function.BodyInserters;
+import org.springframework.web.reactive.function.client.ClientResponse;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 @Rollback
 @RunWith(SpringRunner.class)
@@ -40,6 +47,9 @@ public class IntegrationTestAccount {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
+
+    @LocalServerPort
+    int randomServerPort;
 
     @Test
     public void testEmptyCardholderTableHasNoRecords() {
@@ -93,6 +103,26 @@ public class IntegrationTestAccount {
         Account account = accountRepository.getOne(TEST_ID);
 
         assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
+    }
+
+    @Test
+    public void testAccountApiCreateAccountReturnsStatusCreated() {
+        HashMap<String, String> accountInfo = new HashMap<>();
+        accountInfo.put("cardholderName", TEST_FIRST_NAME + " " + TEST_LAST_NAME);
+        accountInfo.put("ssn", TEST_SSN);
+        accountInfo.put("merchant", TEST_MERCHANT_NAME);
+
+        final String endpoint = System.getProperty("integration-endpoint", "http://localhost:" + randomServerPort);
+        final WebClient client = WebClient.create(endpoint);
+        final ClientResponse response = client
+                                            .post()
+                                            .uri("api/Account/create")
+                                            .body(BodyInserters.fromObject(accountInfo))
+                                            .exchange()
+                                            .block();
+        final HttpStatus status = response.statusCode();
+
+        assertEquals(HttpStatus.CREATED, status);
     }
 
     @After
