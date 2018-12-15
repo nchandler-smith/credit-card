@@ -87,14 +87,12 @@ public class IntegrationTestAccount {
     @Test
     public void testAccountWithOneNameReturnsAccountNumberFromRepository() {
         insertCardholderRecord();
-        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_ID, TEST_MERCHANT_NAME);
-        jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, active=?," +
-                        "cardholder_id=?, merchant_id=?",
-                        TEST_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_ID, TEST_ID);
+        insertMerchantRecord();
+        insertAccountRecord();
 
         Account account = accountRepository.getOne(TEST_ID);
-        assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
 
+        assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
     }
 
     @After
@@ -108,5 +106,15 @@ public class IntegrationTestAccount {
     private void insertCardholderRecord() {
         jdbcTemplate.update("INSERT INTO cardholder SET id=?, first_name=?, last_name=?, ssn=?",
                 TEST_ID, TEST_FIRST_NAME, TEST_LAST_NAME, TEST_SSN);
+    }
+
+    private void insertMerchantRecord() {
+        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_ID, TEST_MERCHANT_NAME);
+    }
+
+    private void insertAccountRecord() {
+        jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, active=?," +
+                        "cardholder_id=?, merchant_id=?",
+                TEST_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_ID, TEST_ID);
     }
 }
