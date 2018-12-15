@@ -46,5 +46,5 @@ public class TestAccount {
     public void anAccountHasACreditCardNumberUUID() { assertEquals(36, account1.getCardNumber().length()); }
 
     @Test
-    public void anAccountHasA10000CreditLimit() { assertEquals( (Integer) 10000, account1.getCreditLimit()); }
+    public void anAccountHasA10000CreditLimit() { assertEquals( (Double) 10000.00, account1.getCreditLimit()); }
 }

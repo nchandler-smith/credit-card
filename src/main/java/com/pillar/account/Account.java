@@ -14,24 +14,26 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     private String cardNumber;
-    private Integer creditLimit;
+    private Double creditLimit;
+
+    public Account() {}
 
     public Account(Integer id) {
         this.id = id;
         this.cardNumber = UUID.randomUUID().toString();
-        this.creditLimit = 10000;
+        this.creditLimit = 10000.00;
     }
 
     public Account(Cardholder cardholder) {
         this.cardNumber = UUID.randomUUID().toString();
-        this.creditLimit = 10000;
+        this.creditLimit = 10000.00;
     }
 
     public Integer getId() { return this.id; }
 
     public String getCardNumber() { return this.cardNumber; }
 
-    public Integer getCreditLimit() { return this.creditLimit; }
+    public Double getCreditLimit() { return this.creditLimit; }
 
     @Override
     public boolean equals(Object other){

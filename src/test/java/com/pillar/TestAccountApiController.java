@@ -41,6 +41,6 @@ public class TestAccountApiController {
 
         Account account = controller.createAccount(cardholder);
 
-        assertEquals((Integer) 10000, account.getCreditLimit());
+        assertEquals((Double) 10000.00, account.getCreditLimit());
     }
 }

@@ -1,5 +1,7 @@
 package com.pillar.integration;
 
+import com.pillar.account.Account;
+import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.Cardholder;
 import com.pillar.cardholder.CardholderRepository;
 import org.junit.After;
@@ -25,6 +27,13 @@ public class IntegrationTestAccount {
     private static final String TEST_FIRST_NAME = "Steve";
     private static final String TEST_LAST_NAME = "Goliath";
     private static final String TEST_SSN = "123-45-6788";
+    private static final String TEST_CARD_NUMBER = "123456789012345678901234567890123456";
+    private static final Double TEST_CREDIT_LIMIT = 10000.00;
+    private static final Boolean TEST_ACTIVE = true;
+    private static final String TEST_MERCHANT_NAME = "Best Buy";
+
+    @Autowired
+    private AccountRepository accountRepository;
 
     @Autowired
     private CardholderRepository cardholderRepository;
@@ -66,6 +75,26 @@ public class IntegrationTestAccount {
         Cardholder cardholder = cardholderRepository.getOne(TEST_ID);
 
         assertEquals(TEST_SSN, cardholder.getSsn());
+    }
+
+    @Test
+    public void testEmptyAccountTableHasNoRecords() {
+        List<Account> accounts = accountRepository.findAll();
+
+        assertEquals(0, accounts.size());
+    }
+
+    @Test
+    public void testAccountWithOneNameReturnsAccountNumberFromRepository() {
+        insertCardholderRecord();
+        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_ID, TEST_MERCHANT_NAME);
+        jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, active=?," +
+                        "cardholder_id=?, merchant_id=?",
+                        TEST_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_ID, TEST_ID);
+
+        Account account = accountRepository.getOne(TEST_ID);
+        assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
+
     }
 
     @After
