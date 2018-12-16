@@ -5,6 +5,7 @@ import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.Cardholder;
 import com.pillar.cardholder.CardholderRepository;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,12 @@ public class IntegrationTestAccount {
     private static final Boolean TEST_ACTIVE = true;
     private static final String TEST_MERCHANT_NAME = "Best Buy";
 
+    private static HashMap<String, String> accountInfo;
+
+
+    private String endpoint;
+    private WebClient client;
+
     @Autowired
     private AccountRepository accountRepository;
 
@@ -49,6 +56,17 @@ public class IntegrationTestAccount {
 
     @LocalServerPort
     int randomServerPort;
+
+    @Before
+    public void setup() {
+        endpoint = System.getProperty("integration-endpoint", "http://localhost:" + randomServerPort);
+        client = WebClient.create(endpoint);
+
+        accountInfo = new HashMap<>();
+        accountInfo.put("cardholderName", TEST_FIRST_NAME + " " + TEST_LAST_NAME);
+        accountInfo.put("ssn", TEST_SSN);
+        accountInfo.put("merchant", TEST_MERCHANT_NAME);
+    }
 
     @Test
     public void testEmptyCardholderTableHasNoRecords() {
@@ -104,15 +122,22 @@ public class IntegrationTestAccount {
         assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
     }
 
+   /* @Test
+    public void testAccountApiCreateAccountCreatesAnEntryInAccountRepository() {
+
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+        final HttpStatus status = response.statusCode();
+
+        assertEquals(HttpStatus.CREATED, status);
+    }*/
+
     @Test
     public void testAccountApiCreateAccountReturnsStatusCreated() {
-        HashMap<String, String> accountInfo = new HashMap<>();
-        accountInfo.put("cardholderName", TEST_FIRST_NAME + " " + TEST_LAST_NAME);
-        accountInfo.put("ssn", TEST_SSN);
-        accountInfo.put("merchant", TEST_MERCHANT_NAME);
-
-        final String endpoint = System.getProperty("integration-endpoint", "http://localhost:" + randomServerPort);
-        final WebClient client = WebClient.create(endpoint);
         final ClientResponse response = client
                                             .post()
                                             .uri("api/account/create")
