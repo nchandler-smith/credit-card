@@ -16,15 +16,13 @@ public class Account {
     private String cardNumber;
     private Double creditLimit;
 
-    public Account() {}
+    public Account() {
+        this.cardNumber = UUID.randomUUID().toString();
+        this.creditLimit = 10000.0;
+    }
 
     public Account(Integer id) {
         this.id = id;
-        this.cardNumber = UUID.randomUUID().toString();
-        this.creditLimit = 10000.00;
-    }
-
-    public Account(Cardholder cardholder) {
         this.cardNumber = UUID.randomUUID().toString();
         this.creditLimit = 10000.00;
     }

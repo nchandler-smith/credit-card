@@ -1,49 +1,41 @@
 package com.pillar;
 
 import com.pillar.account.Account;
-import com.pillar.cardholder.Cardholder;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertEquals;
 
 public class TestAccountApiController {
-    private final String TEST_FIRST_NAME = "Steve";
-    private final String TEST_LAST_NAME = "Goliath";
-    private final String TEST_SSN = "123-45-6788";
+    AccountApiController controller;
+
+    @Before
+    public void setup() {
+        controller = new AccountApiController();
+    }
 
     @Test
     public void accountApiControllerExists() {
-        AccountApiController controller = new AccountApiController();
-
         assertNotNull(controller);
     }
 
     @Test
     public void createAccountFromCardholderReturnsNotNull() {
-        Cardholder cardholder = new Cardholder(TEST_FIRST_NAME, TEST_LAST_NAME,TEST_SSN);
-        AccountApiController controller = new AccountApiController();
-
-        assertNotNull(controller.createAccount(cardholder));
+    assertNotNull(controller.createAccount());
     }
 
     @Test
     public void createAccountFromCardholderReturnsCardNumber() {
-        Cardholder cardholder = new Cardholder(TEST_FIRST_NAME, TEST_LAST_NAME, TEST_SSN);
-        AccountApiController controller = new AccountApiController();
+    Account account = controller.createAccount();
 
-        Account account = controller.createAccount(cardholder);
-
-        assertEquals(36, account.getCardNumber().length());
+    assertEquals(36, account.getCardNumber().length());
     }
 
     @Test
     public void createdAccountHas10000DollarCrditLimit() {
-        Cardholder cardholder = new Cardholder(TEST_FIRST_NAME, TEST_LAST_NAME, TEST_SSN);
-        AccountApiController controller = new AccountApiController();
+        Account account = controller.createAccount();
 
-        Account account = controller.createAccount(cardholder);
-
-        assertEquals((Double) 10000.00, account.getCreditLimit());
+    assertEquals((Double) 10000.00, account.getCreditLimit());
     }
 }

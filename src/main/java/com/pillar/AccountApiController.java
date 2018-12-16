@@ -25,8 +25,8 @@ public class AccountApiController {
 
     public List<Cardholder> getAll() { return cardholderRepository.findAll(); }
 
-    public Account createAccount(Cardholder cardholder){
-        Account account = new Account(cardholder);
+    public Account createAccount(){
+        Account account = new Account();
         return account;
     }
 
