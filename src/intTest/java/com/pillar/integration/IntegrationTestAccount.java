@@ -21,7 +21,6 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
@@ -116,7 +115,7 @@ public class IntegrationTestAccount {
         final WebClient client = WebClient.create(endpoint);
         final ClientResponse response = client
                                             .post()
-                                            .uri("api/Account/create")
+                                            .uri("api/account/create")
                                             .body(BodyInserters.fromObject(accountInfo))
                                             .exchange()
                                             .block();
