@@ -126,6 +126,20 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    public void testAccountApiCreateAccountCreatesAnEntryInAccountRepo() {
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+
+        final long numberOfEntresInAccount = accountRepository.count();
+
+        assertEquals(1, numberOfEntresInAccount);
+    }
+
+    @Test
     public void testAccountApiCreateAccountReturnsStatusCreated() {
         final ClientResponse response = client
                                             .post()

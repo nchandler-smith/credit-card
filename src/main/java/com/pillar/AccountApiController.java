@@ -1,6 +1,7 @@
 package com.pillar;
 
 import com.pillar.account.Account;
+import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.Cardholder;
 import com.pillar.cardholder.CardholderRepository;
 import org.springframework.http.HttpStatus;
@@ -18,9 +19,12 @@ import java.util.Map;
 public class AccountApiController {
 
     private CardholderRepository cardholderRepository;
+    private AccountRepository accountRepository;
 
-    public AccountApiController(CardholderRepository cardholderRepository) {
+    public AccountApiController(CardholderRepository cardholderRepository,
+                                AccountRepository accountRepository) {
         this.cardholderRepository = cardholderRepository;
+        this.accountRepository = accountRepository;
     }
 
     public List<Cardholder> getAll() { return cardholderRepository.findAll(); }
@@ -37,6 +41,7 @@ public class AccountApiController {
         Cardholder cardholder = new Cardholder(name, ssn);
         cardholder = cardholderRepository.save(cardholder);
         Account account = new Account();
+        account = accountRepository.save(account);
         return new ResponseEntity<Account>(account, HttpStatus.CREATED);
     }
 }
