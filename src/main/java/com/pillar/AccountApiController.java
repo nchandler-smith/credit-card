@@ -3,7 +3,6 @@ package com.pillar;
 import com.pillar.account.Account;
 import com.pillar.cardholder.Cardholder;
 import com.pillar.cardholder.CardholderRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -35,7 +34,7 @@ public class AccountApiController {
     public ResponseEntity<Account> createAccount(@RequestBody Map<String, String> params){
         final String name = params.get("cardholderName");
         final String ssn = params.get("ssn");
-        Cardholder cardholder = new Cardholder(name, "name", ssn);
+        Cardholder cardholder = new Cardholder(name, ssn);
         cardholder = cardholderRepository.save(cardholder);
         Account account = new Account();
         return new ResponseEntity<Account>(account, HttpStatus.CREATED);

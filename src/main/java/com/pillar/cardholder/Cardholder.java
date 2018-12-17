@@ -10,30 +10,25 @@ public class Cardholder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String firstName;
-    private String lastName;
+    private String name;
     private String ssn;
 
     public Cardholder() {}
 
-    public Cardholder(Integer id, String firstName, String lastName, String ssn) {
+    public Cardholder(Integer id, String name, String ssn) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
+        this.name = name;
         this.ssn = ssn;
     }
 
-    public Cardholder(String firstName, String lastName, String ssn) {
-        this.firstName = firstName;
-        this.lastName = lastName;
+    public Cardholder(String name, String ssn) {
+        this.name = name;
         this.ssn = ssn;
     }
 
     public Integer getId(){ return this.id; }
 
-    public String getFirstName() { return this.firstName; }
-
-    public String getLastName() { return this.lastName; }
+    public String getName() { return this.name; }
 
     public String getSsn() { return this.ssn; }
 

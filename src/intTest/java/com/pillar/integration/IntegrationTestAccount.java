@@ -31,8 +31,7 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 public class IntegrationTestAccount {
     private static final int TEST_ID = 1;
-    private static final String TEST_FIRST_NAME = "Steve";
-    private static final String TEST_LAST_NAME = "Goliath";
+    private static final String TEST_CARDHOLDER_NAME = "Steve Goliath";
     private static final String TEST_SSN = "123-45-6788";
     private static final String TEST_CARD_NUMBER = "123456789012345678901234567890123456";
     private static final Double TEST_CREDIT_LIMIT = 10000.00;
@@ -63,7 +62,7 @@ public class IntegrationTestAccount {
         client = WebClient.create(endpoint);
 
         accountInfo = new HashMap<>();
-        accountInfo.put("cardholderName", TEST_FIRST_NAME + " " + TEST_LAST_NAME);
+        accountInfo.put("cardholderName", TEST_CARDHOLDER_NAME);
         accountInfo.put("ssn", TEST_SSN);
         accountInfo.put("merchant", TEST_MERCHANT_NAME);
     }
@@ -76,23 +75,13 @@ public class IntegrationTestAccount {
     }
 
     @Test
-    public void testTableWithOneCardholderReturnsFirstNameFromRepository() {
+    public void testTableWithOneCardholderReturnsNameFromRepository() {
 
         insertCardholderRecord();
 
         Cardholder cardholder = cardholderRepository.getOne(TEST_ID);
 
-        assertEquals(TEST_FIRST_NAME, cardholder.getFirstName());
-    }
-
-    @Test
-    public void testTableWithOneCardholderReturnsLastNameFromRepository() {
-
-        insertCardholderRecord();
-
-        Cardholder cardholder = cardholderRepository.getOne(TEST_ID);
-
-        assertEquals(TEST_LAST_NAME, cardholder.getLastName());
+        assertEquals(TEST_CARDHOLDER_NAME, cardholder.getName());
     }
 
     @Test
@@ -158,8 +147,8 @@ public class IntegrationTestAccount {
     }
 
     private void insertCardholderRecord() {
-        jdbcTemplate.update("INSERT INTO cardholder SET id=?, first_name=?, last_name=?, ssn=?",
-                TEST_ID, TEST_FIRST_NAME, TEST_LAST_NAME, TEST_SSN);
+        jdbcTemplate.update("INSERT INTO cardholder SET id=?, name=?, ssn=?",
+                TEST_ID, TEST_CARDHOLDER_NAME, TEST_SSN);
     }
 
     private void insertMerchantRecord() {
