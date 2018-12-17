@@ -1,7 +1,5 @@
 package com.pillar.account;
 
-import com.pillar.cardholder.Cardholder;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,7 +9,7 @@ import java.util.UUID;
 @Entity
 public class Account {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String cardNumber;
     private Double creditLimit;

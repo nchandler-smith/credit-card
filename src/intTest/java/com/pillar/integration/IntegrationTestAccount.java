@@ -122,19 +122,19 @@ public class IntegrationTestAccount {
         assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
     }
 
-   /* @Test
-    public void testAccountApiCreateAccountCreatesAnEntryInAccountRepository() {
-
+   @Test
+    public void testAccountApiCreateAccountCreatesAnEntryInCardholderRepo() {
         final ClientResponse response = client
                 .post()
                 .uri("api/account/create")
                 .body(BodyInserters.fromObject(accountInfo))
                 .exchange()
                 .block();
-        final HttpStatus status = response.statusCode();
 
-        assertEquals(HttpStatus.CREATED, status);
-    }*/
+        final long numberOfEntriesInCardholder = cardholderRepository.count();
+
+        assertEquals( 1, numberOfEntriesInCardholder);
+    }
 
     @Test
     public void testAccountApiCreateAccountReturnsStatusCreated() {
