@@ -23,6 +23,7 @@ import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
@@ -137,6 +138,27 @@ public class IntegrationTestAccount {
         final long numberOfEntresInAccount = accountRepository.count();
 
         assertEquals(1, numberOfEntresInAccount);
+    }
+
+    @Test
+    public void testCreateAccountDoesNotCreateDuplicateCardholderInCardholderRepo() {
+         final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+
+         final ClientResponse response2 = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+
+        final long numberOfEntriesInCardholder = cardholderRepository.count();
+
+        assertEquals(1, numberOfEntriesInCardholder);
     }
 
     @Test

@@ -1,6 +1,7 @@
 package com.pillar;
 
 import com.pillar.account.Account;
+import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.CardholderRepository;
 import org.junit.Before;
 import org.junit.Test;
@@ -11,10 +12,11 @@ import static org.junit.Assert.assertEquals;
 public class TestAccountApiController {
     AccountApiController controller;
     CardholderRepository cardholderRepository;
+    AccountRepository accountRepository;
 
     @Before
     public void setup() {
-        controller = new AccountApiController(cardholderRepository);
+        controller = new AccountApiController(cardholderRepository, accountRepository);
     }
 
     @Test
