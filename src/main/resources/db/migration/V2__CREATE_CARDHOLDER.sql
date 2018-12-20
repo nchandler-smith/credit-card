@@ -1,5 +1,5 @@
 CREATE TABLE cardholder (
   id int auto_increment PRIMARY KEY,
   name varchar(255),
-  ssn varchar(11) UNIQUE KEY
+  ssn varchar(255) NOT NULL UNIQUE
 );

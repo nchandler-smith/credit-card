@@ -1,5 +1,7 @@
 package com.pillar.account;
 
+import com.pillar.cardholder.Cardholder;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

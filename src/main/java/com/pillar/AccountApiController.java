@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 import java.util.Map;
 
+
 @RestController
 @RequestMapping("/api/account")
 public class AccountApiController {
@@ -38,8 +39,10 @@ public class AccountApiController {
     public ResponseEntity<Account> createAccount(@RequestBody Map<String, String> params){
         final String name = params.get("cardholderName");
         final String ssn = params.get("ssn");
-        Cardholder cardholder = new Cardholder(name, ssn);
-        cardholder = cardholderRepository.save(cardholder);
+
+        final Cardholder cardholder = cardholderRepository.findOneBySsn(ssn)
+                .orElseGet(() -> cardholderRepository.save(new Cardholder(ssn, name)));
+
         Account account = new Account();
         account = accountRepository.save(account);
         return new ResponseEntity<Account>(account, HttpStatus.CREATED);
