@@ -40,8 +40,7 @@ public class AccountApiController {
         final String name = params.get("cardholderName");
         final String ssn = params.get("ssn");
 
-        final Cardholder cardholder = cardholderRepository.findOneBySsn(ssn)
-                .orElseGet(() -> cardholderRepository.save(new Cardholder(ssn, name)));
+        final Cardholder cardholder = cardholderRepository.save(new Cardholder(name, ssn));
 
         Account account = new Account();
         account = accountRepository.save(account);
