@@ -113,26 +113,16 @@ public class IntegrationTestAccount {
 
    @Test
     public void testAccountApiCreateAccountCreatesAnEntryInCardholderRepo() {
-        final ClientResponse response = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
+       createClientResponse();
 
-        final long numberOfEntriesInCardholder = cardholderRepository.count();
+       final long numberOfEntriesInCardholder = cardholderRepository.count();
 
         assertEquals( 1, numberOfEntriesInCardholder);
     }
 
     @Test
     public void testAccountApiCreateAccountCreatesAnEntryInAccountRepo() {
-        final ClientResponse response = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
+        createClientResponse();
 
         final long numberOfEntresInAccount = accountRepository.count();
 
@@ -141,19 +131,9 @@ public class IntegrationTestAccount {
 
     @Test
     public void testCreateAccountDoesNotCreateDuplicateCardholderInCardholderRepo() {
-         final ClientResponse response = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
+        createClientResponse();
 
-         final ClientResponse response2 = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
+        createClientResponse();
 
         final long numberOfEntriesInCardholder = cardholderRepository.count();
 
@@ -162,12 +142,7 @@ public class IntegrationTestAccount {
 
     @Test
     public void testAccountReferencesCardholder() {
-        final ClientResponse response = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
+        createClientResponse();
 
         final Account account = accountRepository.getOne(1);
 
@@ -208,5 +183,14 @@ public class IntegrationTestAccount {
         jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, active=?," +
                         "cardholder_id=?, merchant_id=?",
                 TEST_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_ID, TEST_ID);
+    }
+
+    private void createClientResponse() {
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
     }
 }
