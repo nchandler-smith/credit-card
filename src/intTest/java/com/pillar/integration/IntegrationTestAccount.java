@@ -161,6 +161,20 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    public void testAccountReferencesCardholder() {
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+
+        final Account account = accountRepository.getOne(1);
+
+        assertEquals(TEST_CARDHOLDER_NAME, account.getCardholder().getName());
+    }
+
+    @Test
     public void testAccountApiCreateAccountReturnsStatusCreated() {
         final ClientResponse response = client
                                             .post()

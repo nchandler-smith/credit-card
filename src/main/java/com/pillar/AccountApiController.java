@@ -42,7 +42,7 @@ public class AccountApiController {
 
         final Cardholder cardholder = cardholderRepository.save(new Cardholder(name, ssn));
 
-        Account account = new Account();
+        Account account = new Account(cardholder);
         account = accountRepository.save(account);
         return new ResponseEntity<Account>(account, HttpStatus.CREATED);
     }

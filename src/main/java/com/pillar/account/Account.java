@@ -2,10 +2,7 @@ package com.pillar.account;
 
 import com.pillar.cardholder.Cardholder;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.UUID;
 
 @Entity
@@ -15,6 +12,10 @@ public class Account {
     private Integer id;
     private String cardNumber;
     private Double creditLimit;
+
+    @ManyToOne
+    @JoinColumn(name = "cardholder_id")
+    private Cardholder cardholder;
 
     public Account() {
         this.cardNumber = UUID.randomUUID().toString();
@@ -27,11 +28,17 @@ public class Account {
         this.creditLimit = 10000.00;
     }
 
+    public Account(Cardholder cardholder) {
+        this.cardholder = cardholder;
+    }
+
     public Integer getId() { return this.id; }
 
     public String getCardNumber() { return this.cardNumber; }
 
     public Double getCreditLimit() { return this.creditLimit; }
+
+    public Cardholder getCardholder() { return this.cardholder; }
 
     @Override
     public boolean equals(Object other){
