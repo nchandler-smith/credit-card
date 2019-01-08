@@ -4,6 +4,8 @@ import com.pillar.account.Account;
 import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.Cardholder;
 import com.pillar.cardholder.CardholderRepository;
+import com.pillar.merchant.Merchant;
+import com.pillar.merchant.MerchantRepository;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -36,6 +38,7 @@ public class IntegrationTestAccount {
     private static final String TEST_CARD_NUMBER = "123456789012345678901234567890123456";
     private static final Double TEST_CREDIT_LIMIT = 10000.00;
     private static final Boolean TEST_ACTIVE = true;
+    private static final int TEST_MERCHANT_ID = 1;
     private static final String TEST_MERCHANT_NAME = "Best Buy";
 
     private static HashMap<String, String> accountInfo;
@@ -51,6 +54,9 @@ public class IntegrationTestAccount {
     private CardholderRepository cardholderRepository;
 
     @Autowired
+    private MerchantRepository merchantRepository;
+
+    @Autowired
     private JdbcTemplate jdbcTemplate;
 
     @LocalServerPort
@@ -64,7 +70,7 @@ public class IntegrationTestAccount {
         accountInfo = new HashMap<>();
         accountInfo.put("cardholderName", TEST_CARDHOLDER_NAME);
         accountInfo.put("ssn", TEST_SSN);
-        accountInfo.put("merchant", TEST_MERCHANT_NAME);
+        accountInfo.put("merchantName", TEST_MERCHANT_NAME);
     }
 
     @Test
@@ -141,12 +147,30 @@ public class IntegrationTestAccount {
     }
 
     @Test
-    public void testAccountReferencesCardholder() {
+    public void testAccountReferencesNewCardholder() {
         createClientResponse();
 
         final Account account = accountRepository.getOne(1);
 
         assertEquals(TEST_CARDHOLDER_NAME, account.getCardholder().getName());
+    }
+
+    @Test
+    public void testMerchantRepoFindBestBuyMerchantByName() {
+        insertMerchantRecord();
+
+        Merchant merchant = merchantRepository.findByName(TEST_MERCHANT_NAME);
+
+        assertEquals(TEST_MERCHANT_NAME, merchant.getName());
+    }
+
+    @Test
+    public void testAccountReferencesNewMerchant() {
+        createClientResponse();
+
+        final Account account = accountRepository.getOne(1);
+
+        assertEquals(TEST_MERCHANT_NAME, account.getMerchant().getName());
     }
 
     @Test
