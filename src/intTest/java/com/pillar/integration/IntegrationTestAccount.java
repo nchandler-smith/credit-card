@@ -24,8 +24,11 @@ import org.springframework.web.reactive.function.client.WebClient;
 import javax.transaction.Transactional;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
@@ -184,6 +187,22 @@ public class IntegrationTestAccount {
         final HttpStatus status = response.statusCode();
 
         assertEquals(HttpStatus.CREATED, status);
+    }
+
+    @Test
+    public void testAccountApiCreateAccountReturnsCarditCardNumber() {
+        final ClientResponse response = client
+                                            .post()
+                                            .uri("api/account/create")
+                                            .body(BodyInserters.fromObject(accountInfo))
+                                            .exchange()
+                                            .block();
+        final Map body = response.bodyToMono(Map.class).block();
+
+        assertTrue(body.containsKey("cardNumber"));
+        assertNotNull(body.get("cardNumber"));
+        assertEquals(36, body.get("cardNumber").toString().length());
+
     }
 
     @After
