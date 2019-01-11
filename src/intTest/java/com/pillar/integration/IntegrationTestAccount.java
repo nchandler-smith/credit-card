@@ -205,6 +205,21 @@ public class IntegrationTestAccount {
 
     }
 
+    @Test
+    public void testAccountApiCreateAccountReturnsCreditLimit() {
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+        final Map body = response.bodyToMono(Map.class).block();
+
+        assertTrue(body.containsKey("creditLimit"));
+        assertEquals(10000.0, body.get("creditLimit"));
+    }
+
+
     @After
     public void tearDown() {
         jdbcTemplate.update("SET FOREIGN_KEY_CHECKS = 0");
