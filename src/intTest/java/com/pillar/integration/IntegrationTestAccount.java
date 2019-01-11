@@ -196,29 +196,16 @@ public class IntegrationTestAccount {
 
     @Test
     public void testAccountApiCreateAccountReturnsCarditCardNumber() {
-        final ClientResponse response = client
-                                            .post()
-                                            .uri("api/account/create")
-                                            .body(BodyInserters.fromObject(accountInfo))
-                                            .exchange()
-                                            .block();
-        final Map body = response.bodyToMono(Map.class).block();
+        final Map body = createClientResponseReturnBodyAsMap();
 
         assertTrue(body.containsKey("cardNumber"));
         assertNotNull(body.get("cardNumber"));
         assertEquals(36, body.get("cardNumber").toString().length());
-
     }
 
     @Test
     public void testAccountApiCreateAccountReturnsCreditLimit() {
-        final ClientResponse response = client
-                .post()
-                .uri("api/account/create")
-                .body(BodyInserters.fromObject(accountInfo))
-                .exchange()
-                .block();
-        final Map body = response.bodyToMono(Map.class).block();
+        final Map body = createClientResponseReturnBodyAsMap();
 
         assertTrue(body.containsKey("creditLimit"));
         assertEquals(10000.0, body.get("creditLimit"));
@@ -265,5 +252,15 @@ public class IntegrationTestAccount {
                 .body(BodyInserters.fromObject(accountInfo))
                 .exchange()
                 .block();
+    }
+
+    private Map createClientResponseReturnBodyAsMap() {
+        final ClientResponse response = client
+                .post()
+                .uri("api/account/create")
+                .body(BodyInserters.fromObject(accountInfo))
+                .exchange()
+                .block();
+        return response.bodyToMono(Map.class).block();
     }
 }
