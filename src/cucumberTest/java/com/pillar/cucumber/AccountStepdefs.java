@@ -36,9 +36,9 @@ public class AccountStepdefs {
         final WebClient client = WebClient.create(endpoint);
 
         final HashMap<String, String> accountInfo = new HashMap<>();
-        accountInfo.put("cardHolderName", this.cardholderName);
+        accountInfo.put("cardholderName", this.cardholderName);
         accountInfo.put("ssn", this.ssn);
-        accountInfo.put("merchant", merchant);
+        accountInfo.put("merchantName", merchant);
 
         final ClientResponse response = client
                                             .post()

@@ -44,7 +44,8 @@ public class AccountApiController {
         final String merchantName = params.get("merchantName");
 
         final Cardholder cardholder = cardholderRepository.save(new Cardholder(name, ssn));
-        final Merchant merchant = merchantRepository.save(new Merchant(merchantName));
+        final Merchant merchant = merchantRepository.findByName(merchantName)
+            .orElseGet(() -> merchantRepository.save(new Merchant(merchantName)));
 
         Account account = new Account(cardholder, merchant);
         account = accountRepository.save(account);

@@ -165,7 +165,8 @@ public class IntegrationTestAccount {
     public void testMerchantRepoFindBestBuyMerchantByName() {
         insertMerchantRecord();
 
-        Merchant merchant = merchantRepository.findByName(TEST_MERCHANT_NAME);
+        Merchant merchant = merchantRepository.findByName(TEST_MERCHANT_NAME)
+                .orElseGet(() -> merchantRepository.save(new Merchant(TEST_MERCHANT_NAME)));
 
         assertEquals(TEST_MERCHANT_NAME, merchant.getName());
     }
@@ -223,6 +224,17 @@ public class IntegrationTestAccount {
         assertEquals(10000.0, body.get("creditLimit"));
     }
 
+    @Test
+    @Transactional
+    public void testAccountApiCreateAccountDoesNotCreateDuplicateMerchant() {
+        insertMerchantRecord();
+
+        createClientResponse();
+        final long numberOfEntriesInMerchant = merchantRepository.count();
+
+        assertEquals(1, numberOfEntriesInMerchant);
+    }
+
     @After
     public void tearDown() {
         jdbcTemplate.update("SET FOREIGN_KEY_CHECKS = 0");
@@ -237,7 +249,7 @@ public class IntegrationTestAccount {
     }
 
     private void insertMerchantRecord() {
-        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_CARDHOLDER_ID, TEST_MERCHANT_NAME);
+        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_MERCHANT_ID, TEST_MERCHANT_NAME);
     }
 
     private void insertAccountRecord() {
