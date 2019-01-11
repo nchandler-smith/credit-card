@@ -31,11 +31,10 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.assertNotNull;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
 @Rollback
 @RunWith(SpringRunner.class)
 public class IntegrationTestAccount {
-    private static final int TEST_ID = 1;
+    private static final int TEST_CARDHOLDER_ID = 1;
     private static final String TEST_CARDHOLDER_NAME = "Steve Goliath";
     private static final String TEST_SSN = "123-45-6788";
     private static final String TEST_CARD_NUMBER = "123456789012345678901234567890123456";
@@ -84,20 +83,22 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    @Transactional
     public void testTableWithOneCardholderReturnsNameFromRepository() {
 
         insertCardholderRecord();
 
-        Cardholder cardholder = cardholderRepository.getOne(TEST_ID);
+        Cardholder cardholder = cardholderRepository.getOne(TEST_CARDHOLDER_ID);
 
         assertEquals(TEST_CARDHOLDER_NAME, cardholder.getName());
     }
 
     @Test
+    @Transactional
     public void testTableWithOneCardholderReturnsSsnFromRepository() {
         insertCardholderRecord();
 
-        Cardholder cardholder = cardholderRepository.getOne(TEST_ID);
+        Cardholder cardholder = cardholderRepository.getOne(TEST_CARDHOLDER_ID);
 
         assertEquals(TEST_SSN, cardholder.getSsn());
     }
@@ -110,12 +111,13 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    @Transactional
     public void testAccountWithOneNameReturnsAccountNumberFromRepository() {
         insertCardholderRecord();
         insertMerchantRecord();
         insertAccountRecord();
 
-        Account account = accountRepository.getOne(TEST_ID);
+        Account account = accountRepository.getOne(TEST_CARDHOLDER_ID);
 
         assertEquals(TEST_CARD_NUMBER, account.getCardNumber());
     }
@@ -150,6 +152,7 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    @Transactional
     public void testAccountReferencesNewCardholder() {
         createClientResponse();
 
@@ -168,6 +171,7 @@ public class IntegrationTestAccount {
     }
 
     @Test
+    @Transactional
     public void testAccountReferencesNewMerchant() {
         createClientResponse();
 
@@ -219,7 +223,6 @@ public class IntegrationTestAccount {
         assertEquals(10000.0, body.get("creditLimit"));
     }
 
-
     @After
     public void tearDown() {
         jdbcTemplate.update("SET FOREIGN_KEY_CHECKS = 0");
@@ -230,17 +233,17 @@ public class IntegrationTestAccount {
 
     private void insertCardholderRecord() {
         jdbcTemplate.update("INSERT INTO cardholder SET id=?, name=?, ssn=?",
-                TEST_ID, TEST_CARDHOLDER_NAME, TEST_SSN);
+                TEST_CARDHOLDER_ID, TEST_CARDHOLDER_NAME, TEST_SSN);
     }
 
     private void insertMerchantRecord() {
-        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_ID, TEST_MERCHANT_NAME);
+        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", TEST_CARDHOLDER_ID, TEST_MERCHANT_NAME);
     }
 
     private void insertAccountRecord() {
         jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, active=?," +
                         "cardholder_id=?, merchant_id=?",
-                TEST_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_ID, TEST_ID);
+                TEST_CARDHOLDER_ID, TEST_CARD_NUMBER, TEST_CREDIT_LIMIT, TEST_ACTIVE, TEST_CARDHOLDER_ID, TEST_CARDHOLDER_ID);
     }
 
     private void createClientResponse() {

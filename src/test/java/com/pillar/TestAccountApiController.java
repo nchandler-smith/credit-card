@@ -3,6 +3,7 @@ package com.pillar;
 import com.pillar.account.Account;
 import com.pillar.account.AccountRepository;
 import com.pillar.cardholder.CardholderRepository;
+import com.pillar.merchant.MerchantRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,10 +14,11 @@ public class TestAccountApiController {
     AccountApiController controller;
     CardholderRepository cardholderRepository;
     AccountRepository accountRepository;
+    MerchantRepository merchantRepository;
 
     @Before
     public void setup() {
-        controller = new AccountApiController(cardholderRepository, accountRepository);
+        controller = new AccountApiController(cardholderRepository, merchantRepository, accountRepository);
     }
 
     @Test

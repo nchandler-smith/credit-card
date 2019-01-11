@@ -42,7 +42,7 @@ public class AccountStepdefs {
 
         final ClientResponse response = client
                                             .post()
-                                            .uri("api/Account/create")
+                                            .uri("api/account/create")
                                             .body(BodyInserters.fromObject(accountInfo))
                                             .exchange()
                                             .block();
@@ -53,13 +53,13 @@ public class AccountStepdefs {
     @Then("a new account is created and a new card number is issued to that account and returned")
     public void aNewAccountIsCreatedAndANewCardNumberIsIssuedToThatAccountAndReturned(){
         assertEquals(HttpStatus.CREATED, this.status);
-        assertTrue(body.containsKey("creditCardNumber"));
-        assertNotNull(body.get("creditCardNumber"));
+        assertTrue(body.containsKey("cardNumber"));
+        assertNotNull(body.get("cardNumber"));
     }
 
     @And("a credit limit of 10,000 is assigned")
     public void aCreditLimitOf10000IsAssigned(){
-        assertTrue(body.containsKey("creditLilmit"));
+        assertTrue(body.containsKey("creditLimit"));
         assertNotNull(body.get("creditLimit"));
     }
 }
