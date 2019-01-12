@@ -1,16 +1,25 @@
 package com.pillar.accountTests;
 
 import com.pillar.account.Account;
+import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 public class TestAccount {
 
-    @Test
-    public void anAccountHasAnId() {
-        Account account = new Account();
+    Account account;
 
-        assertNotNull(account.getId());
+    @Before
+    public void setup() {account = new Account(); }
+
+    @Test
+    public void anAccountHasAnId() { assertNotNull(account.getId()); }
+
+    @Test
+    public void anAccountHasACardNumberUUIDAsString() {
+        assertNotNull(account.getCardNumber());
+        assertEquals(36, account.getCardNumber().length());
     }
 }
