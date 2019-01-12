@@ -13,4 +13,11 @@ public class TestCardHolder {
 
         assertNotNull(cardHolder.getName());
     }
+
+    @Test
+    public void aCardHolderSsnIsNotNull() {
+        CardHolder cardHolder = new CardHolder();
+
+        assertNotNull(cardHolder.getSsn());
+    }
 }
