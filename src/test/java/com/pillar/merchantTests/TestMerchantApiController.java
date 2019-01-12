@@ -1,7 +1,8 @@
-package com.pillar;
+package com.pillar.testMerchant;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.pillar.MerchantApiController;
 import com.pillar.merchant.Merchant;
 import com.pillar.merchant.MerchantRepository;
 import org.junit.Before;
