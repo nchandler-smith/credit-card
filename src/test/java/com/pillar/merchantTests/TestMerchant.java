@@ -1,4 +1,4 @@
-package com.pillar.testMerchant;
+package com.pillar.merchantTests;
 
 import com.pillar.merchant.Merchant;
 import org.junit.Before;

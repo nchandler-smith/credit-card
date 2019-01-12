@@ -1,4 +1,4 @@
-package com.pillar.testMerchant;
+package com.pillar.merchantTests;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
