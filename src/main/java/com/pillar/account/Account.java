@@ -4,15 +4,17 @@ import java.util.UUID;
 
 public class Account {
 
-    private Integer id = 1;
-    private String cardNumber = "1";
+    private final Integer id = 1;
+    private String cardNumber;
+    private final Double creditLimit = 10000.0;
 
     public Account() {
-        this.id = 1;
         this.cardNumber = UUID.randomUUID().toString();
     }
 
     public Integer getId() { return this.id; }
 
     public String getCardNumber() { return this.cardNumber; }
+
+    public Double getCreditLimit() { return this.creditLimit; }
 }

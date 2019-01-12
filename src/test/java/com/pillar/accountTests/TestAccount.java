@@ -22,4 +22,9 @@ public class TestAccount {
         assertNotNull(account.getCardNumber());
         assertEquals(36, account.getCardNumber().length());
     }
+
+    @Test
+    public void anAccountHasACreditLimitOf10000() {
+        assertEquals(10000.0, account.getCreditLimit(), 0.01);
+    }
 }
