@@ -1,30 +1,24 @@
 package com.pillar.cardHolderTests;
 
 import com.pillar.cardHolder.CardHolder;
+import org.junit.Before;
 import org.junit.Test;
 
 import static org.junit.Assert.assertNotNull;
 
 public class TestCardHolder {
 
-    @Test
-    public void aCardHolderNameHasAnId() {
-        CardHolder cardHolder = new CardHolder();
+    private CardHolder cardHolder;
 
-        assertNotNull(cardHolder.getId());
-    }
+    @Before
+    public void setup() { cardHolder = new CardHolder(); }
 
     @Test
-    public void aCardHolderNameIsNotNull() {
-        CardHolder cardHolder = new CardHolder();
-
-        assertNotNull(cardHolder.getName());
-    }
+    public void aCardHolderNameHasAnId() { assertNotNull(cardHolder.getId()); }
 
     @Test
-    public void aCardHolderSsnIsNotNull() {
-        CardHolder cardHolder = new CardHolder();
+    public void aCardHolderNameIsNotNull() { assertNotNull(cardHolder.getName()); }
 
-        assertNotNull(cardHolder.getSsn());
-    }
+    @Test
+    public void aCardHolderSsnIsNotNull() {  assertNotNull(cardHolder.getSsn()); }
 }
