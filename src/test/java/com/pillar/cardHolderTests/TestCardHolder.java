@@ -8,6 +8,13 @@ import static org.junit.Assert.assertNotNull;
 public class TestCardHolder {
 
     @Test
+    public void aCardHolderNameHasAnId() {
+        CardHolder cardHolder = new CardHolder();
+
+        assertNotNull(cardHolder.getId());
+    }
+
+    @Test
     public void aCardHolderNameIsNotNull() {
         CardHolder cardHolder = new CardHolder();
 
