@@ -1,4 +1,4 @@
-package com.pillar.cardHolder;
+package com.pillar.cardholder;
 
 public class CardHolder {
     private  Integer id = 1;

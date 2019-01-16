@@ -1,6 +1,6 @@
 package com.pillar.cardHolderTests;
 
-import com.pillar.cardHolder.CardHolder;
+import com.pillar.cardholder.CardHolder;
 import org.junit.Before;
 import org.junit.Test;
 
