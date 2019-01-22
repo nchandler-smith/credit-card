@@ -8,12 +8,18 @@ import java.util.UUID;
 public class Account {
 
     @Id
-    private final Integer id = 1;
+    private Integer id;
     private String cardNumber;
-    private final Double creditLimit = 10000.0;
+    private Double creditLimit;
 
     public Account() {
         this.cardNumber = UUID.randomUUID().toString();
+    }
+
+    public Account(Integer id, String cardNumber, Double creditLimit) {
+        this.id = id;
+        this.cardNumber = cardNumber;
+        this.creditLimit = creditLimit;
     }
 
     public Integer getId() { return this.id; }
