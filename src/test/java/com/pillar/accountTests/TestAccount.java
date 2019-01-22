@@ -12,7 +12,7 @@ public class TestAccount {
     Account account;
 
     @Before
-    public void setup() {account = new Account(); }
+    public void setup() {account = new Account(1, 10000.0); }
 
     @Test
     public void anAccountHasAnId() { assertNotNull(account.getId()); }
