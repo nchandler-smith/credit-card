@@ -28,5 +28,4 @@ public class IntegrationTestCardHolder {
         assertEquals(0, cardHolders.size());
 
     }
-
 }
