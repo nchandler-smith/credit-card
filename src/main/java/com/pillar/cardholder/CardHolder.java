@@ -6,9 +6,17 @@ import javax.persistence.Id;
 @Entity
 public class CardHolder {
     @Id
-    private  Integer id = 1;
-    private String name = "Steve Goliath";
-    private String ssn = "123-45-6788";
+    private Integer id;
+    private String name;
+    private String ssn;
+
+    public CardHolder() {}
+
+    public CardHolder(Integer id, String name, String ssn) {
+        this.id = id;
+        this.name = name;
+        this.ssn = ssn;
+    }
 
     public Integer getId() { return this.id; }
 
