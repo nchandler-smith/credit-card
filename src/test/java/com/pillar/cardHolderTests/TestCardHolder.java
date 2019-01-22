@@ -11,7 +11,7 @@ public class TestCardHolder {
     private CardHolder cardHolder;
 
     @Before
-    public void setup() { cardHolder = new CardHolder(); }
+    public void setup() { cardHolder = new CardHolder(1, "Test Name", "111-11-1111"); }
 
     @Test
     public void aCardHolderNameHasAnId() { assertNotNull(cardHolder.getId()); }
