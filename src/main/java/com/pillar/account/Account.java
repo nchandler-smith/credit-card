@@ -1,5 +1,6 @@
 package com.pillar.account;
 
+import com.pillar.cardholder.CardHolder;
 import com.pillar.merchant.Merchant;
 
 import javax.persistence.Entity;
@@ -18,6 +19,9 @@ public class Account {
     @ManyToOne
     @JoinColumn(name="merchant_id")
     private Merchant merchant;
+    @ManyToOne
+    @JoinColumn(name="card_holder_id")
+    private CardHolder cardHolder;
 
     public Account() {
         this.cardNumber = UUID.randomUUID().toString();
@@ -35,11 +39,12 @@ public class Account {
         this.creditLimit = creditLimit;
     }
 
-    public Account(String cardNumber, Double creditLimit, Merchant merchant) {
+    public Account(String cardNumber, Double creditLimit, Merchant merchant, CardHolder cardHolder) {
         this.id = null;
         this.cardNumber = cardNumber;
         this.creditLimit = creditLimit;
         this.merchant = merchant;
+        this.cardHolder = cardHolder;
     }
 
     public Integer getId() { return this.id; }
@@ -49,4 +54,6 @@ public class Account {
     public Double getCreditLimit() { return this.creditLimit; }
 
     public Merchant getMerchant() { return this.merchant; }
+
+    public CardHolder getCardHolder() { return this.cardHolder; }
 }

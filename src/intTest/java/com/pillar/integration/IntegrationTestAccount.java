@@ -2,6 +2,7 @@ package com.pillar.integration;
 
 import com.pillar.account.Account;
 import com.pillar.account.AccountRepository;
+import com.pillar.cardholder.CardHolder;
 import com.pillar.merchant.Merchant;
 import org.junit.After;
 import org.junit.Before;
@@ -65,6 +66,16 @@ public class IntegrationTestAccount {
         Account account = accountRepository.getOne(1);
 
         assertTrue(account.getMerchant() instanceof Merchant);
+    }
+
+    @Test
+    @Transactional
+    public void testAccountReferencesCardHolder() {
+        insertRecords(cardNumber);
+
+        Account account = accountRepository.getOne(1);
+
+        assertTrue(account.getCardHolder() instanceof CardHolder);
     }
 
     private void insertRecords(String cardNumber) {
