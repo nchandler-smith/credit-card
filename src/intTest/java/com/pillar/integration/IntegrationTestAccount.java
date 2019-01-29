@@ -39,7 +39,9 @@ public class IntegrationTestAccount {
     @Transactional
     public void testAccountTableWithOneRecordReturnsThatRecord() {
         String cardNumber = UUID.randomUUID().toString();
-        jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?", 1, cardNumber, 10000.0);
+        jdbcTemplate.update("INSERT INTO merchant SET id=?, name=?", 1, "Best Buy");
+        jdbcTemplate.update("INSERT INTO card_holder SET id=?, name=?, ssn=?", 1, "Steve Goliath", "123-45-6789");
+        jdbcTemplate.update("INSERT INTO account SET id=?, card_number=?, credit_limit=?, merchant_id=?, card_holder_id=?", 1, cardNumber, 10000.0, 1, 1);
 
         Account account = accountRepository.getOne(1);
 
@@ -51,6 +53,10 @@ public class IntegrationTestAccount {
     @After
     @Transactional
     public void tearDown() {
+        jdbcTemplate.update("DELETE FROM merchant");
+        jdbcTemplate.update("DELETE FROM card_holder");
+//        jdbcTemplate.update("ALTER TABLE account DROP FOREIGN KEY fk_merchant_id");
+//        jdbcTemplate.update("ALTER TABLE account DROP FOREIGN KEY fk_card_holder_id");
         jdbcTemplate.update("DELETE FROM account");
     }
 }
