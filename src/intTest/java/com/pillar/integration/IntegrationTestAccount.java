@@ -4,6 +4,7 @@ import com.pillar.account.Account;
 import com.pillar.account.AccountRepository;
 import com.pillar.merchant.Merchant;
 import org.junit.After;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,11 +25,18 @@ import static org.junit.Assert.assertTrue;
 @RunWith(SpringRunner.class)
 public class IntegrationTestAccount {
 
+    String cardNumber;
+
     @Autowired
     AccountRepository accountRepository;
 
     @Autowired
     JdbcTemplate jdbcTemplate;
+
+    @Before
+    public void testSetup() {
+        cardNumber = UUID.randomUUID().toString();
+    }
 
     @Test
     public void testEmptyAccountTableHasNoRecords() {
@@ -40,7 +48,6 @@ public class IntegrationTestAccount {
     @Test
     @Transactional
     public void testAccountTableWithOneRecordReturnsThatRecord() {
-        String cardNumber = UUID.randomUUID().toString();
         insertRecords(cardNumber);
 
         Account account = accountRepository.getOne(1);
@@ -53,7 +60,6 @@ public class IntegrationTestAccount {
     @Test
     @Transactional
     public void testAccountReferencesMerchant() {
-        String cardNumber = UUID.randomUUID().toString();
         insertRecords(cardNumber);
 
         Account account = accountRepository.getOne(1);
