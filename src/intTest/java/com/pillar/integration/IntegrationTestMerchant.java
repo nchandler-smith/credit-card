@@ -71,7 +71,7 @@ public class IntegrationTestMerchant {
 
     @After
     public void tearDown() {
-        jdbcTemplate.update("TRUNCATE merchant");
+        jdbcTemplate.update("DELETE FROM merchant");
     }
 
     private int insertTestMerchant() {
