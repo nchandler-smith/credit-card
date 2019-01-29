@@ -47,7 +47,6 @@ public class IntegrationTestCardHolder {
     }
 
     @After
-    @Transactional
     public void tearDown() {
         jdbcTemplate.update("DELETE FROM card_holder");
     }

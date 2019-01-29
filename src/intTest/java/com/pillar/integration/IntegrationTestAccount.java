@@ -55,8 +55,6 @@ public class IntegrationTestAccount {
     public void tearDown() {
         jdbcTemplate.update("DELETE FROM merchant");
         jdbcTemplate.update("DELETE FROM card_holder");
-//        jdbcTemplate.update("ALTER TABLE account DROP FOREIGN KEY fk_merchant_id");
-//        jdbcTemplate.update("ALTER TABLE account DROP FOREIGN KEY fk_card_holder_id");
         jdbcTemplate.update("DELETE FROM account");
     }
 }
